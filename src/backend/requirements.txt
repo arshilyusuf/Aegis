@@ -1,0 +1,32 @@
+# ── Web Framework ─────────────────────────────────────────────────────────────
+fastapi
+uvicorn[standard]
+httpx
+websockets
+python-multipart
+# ── ML / NLP ──────────────────────────────────────────────────────────────────
+transformers
+sentence-transformers
+onnxruntime
+optimum[onnxruntime]
+torch
+tokenizers
+
+# ── Vector Database ───────────────────────────────────────────────────────────
+qdrant-client
+
+# ── Cache ─────────────────────────────────────────────────────────────────────
+redis[hiredis]
+
+# ── Data Processing ───────────────────────────────────────────────────────────
+numpy
+pydantic
+pydantic-settings
+
+# ── Observability ────────────────────────────────────────────────────────────
+structlog
+prometheus-fastapi-instrumentator
+
+# ── Utilities ───────────────────────────────────────────────────────────────
+python-dotenv
+orjson
