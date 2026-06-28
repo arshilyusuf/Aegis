@@ -23,7 +23,7 @@ import {
   FlaskConical,
 } from "lucide-react";
 
-const API = import.meta.env.REACT_APP_API_URL || "http://localhost:8000";
+const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const tokens = {
   bg: "#09090b",
@@ -354,7 +354,7 @@ export default function PolicyConfig() {
   const [saveMsg, setSaveMsg] = useState("");
 
   useEffect(() => {
-    fetch(`${API}/api/policy`)
+    fetch(`${API}/policy`)
       .then((r) => r.json())
       .then((d) => setLocalPolicy(d))
       .catch(() => {});
@@ -364,7 +364,7 @@ export default function PolicyConfig() {
     setRunning(true);
     setEvalResults(null);
     try {
-      const r = await fetch(`${API}/api/evaluate`, { method: "POST" });
+      const r = await fetch(`${API}/evaluate`, { method: "POST" });
       setEvalResults(await r.json());
     } catch {
     } finally {
@@ -375,7 +375,7 @@ export default function PolicyConfig() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await fetch(`${API}/api/policy`, {
+      await fetch(`${API}/policy`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

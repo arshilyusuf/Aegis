@@ -24,7 +24,7 @@ import {
   Activity,
 } from "lucide-react";
 
-const API = import.meta.env.REACT_APP_API_URL || "http://localhost:8000";
+const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const VERDICT_COLORS = {
   CLEAR: "#22c55e",
@@ -201,7 +201,7 @@ export default function Dashboard({ logs }) {
 
   const fetchStats = async () => {
     try {
-      const r = await fetch(`${API}/api/stats`);
+      const r = await fetch(`${API}/stats`);
       setStats(await r.json());
     } catch {
     } finally {

@@ -12,7 +12,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-const API = import.meta.env.REACT_APP_API_URL || "http://localhost:8000";
+const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 const tokens = {
   bg: "#09090b",
@@ -46,7 +46,7 @@ function TestConsole() {
   const run = async () => {
     setLoading(true);
     try {
-      const r = await fetch(`${API}/api/analyze`, {
+      const r = await fetch(`${API}/analyze`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: input }),
@@ -436,7 +436,7 @@ export default function App() {
       .then(setHealth)
       .catch(() => setHealth({ status: "offline" }));
     // Initial seed: set directly (no dedup needed, starting from empty)
-    fetch(`${API}/api/logs?limit=200`)
+    fetch(`${API}/logs?limit=200`)
       .then((r) => r.json())
       .then(setLogs)
       .catch(() => {});

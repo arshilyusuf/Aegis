@@ -13,7 +13,7 @@ torch
 tokenizers
 
 # ── Vector Database ───────────────────────────────────────────────────────────
-qdrant-client
+qdrant-client==1.9.2
 
 # ── Cache ─────────────────────────────────────────────────────────────────────
 redis[hiredis]
@@ -30,3 +30,5 @@ prometheus-fastapi-instrumentator
 # ── Utilities ───────────────────────────────────────────────────────────────
 python-dotenv
 orjson
+
+datasets

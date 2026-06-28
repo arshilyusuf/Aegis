@@ -27,11 +27,8 @@ COPY app/ ./app/
 COPY data/ ./data/
 
 # Pre-download models at build time to keep startup fast
-RUN python -c "
-from sentence_transformers import SentenceTransformer
-SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
-print('Embedder model cached.')
-" || echo "Model download deferred to runtime."
+# Pre-download models at build time to keep startup fast
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2'); print('Embedder model cached.')" || echo "Model download deferred to runtime."
 
 EXPOSE 8000
 

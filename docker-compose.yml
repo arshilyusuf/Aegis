@@ -10,11 +10,6 @@ services:
       - "6334:6334"
     volumes:
       - qdrant_data:/qdrant/storage
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:6333/healthz"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     restart: unless-stopped
 
   # ── Redis Cache ────────────────────────────────────────────────────────────
@@ -26,11 +21,6 @@ services:
     command: redis-server --maxmemory 512mb --maxmemory-policy allkeys-lru
     volumes:
       - redis_data:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 3s
-      retries: 5
     restart: unless-stopped
 
   # ── FastAPI Backend ────────────────────────────────────────────────────────
@@ -54,17 +44,11 @@ services:
       - SEED_ON_STARTUP=true
     depends_on:
       qdrant:
-        condition: service_healthy
+        condition: service_started
       redis:
-        condition: service_healthy
+        condition: service_started
     volumes:
       - model_cache:/root/.cache/huggingface
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 15s
-      timeout: 10s
-      retries: 5
-      start_period: 60s
     restart: unless-stopped
 
   # ── React Frontend ─────────────────────────────────────────────────────────
@@ -76,12 +60,29 @@ services:
     ports:
       - "3000:80"
     environment:
-      - REACT_APP_API_URL=http://localhost:8000
+      - VITE_API_URL=http://localhost:8000
       - REACT_APP_WS_URL=ws://localhost:8000
     depends_on:
       backend:
-        condition: service_healthy
+        condition: service_started
     restart: unless-stopped
+
+  # ── Data Ingestion Job (One-off Task) ──────────────────────────────────────
+  ingestion:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile
+    container_name: aegis-ingestion
+    profiles: ["setup"]
+    environment:
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+    depends_on:
+      qdrant:
+        condition: service_started
+    volumes:
+      - model_cache:/root/.cache/huggingface
+    command: ["python", "-m", "app.ingest_hf_data"]
 
 volumes:
   qdrant_data:
