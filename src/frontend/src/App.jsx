@@ -12,7 +12,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-const API = import.meta.env.VITE_API_URL || "/api";
+const API = import.meta.env.VITE_API_URL || "";
 const tokens = {
   bg: "#09090b",
   surface: "#18181b",

@@ -24,7 +24,7 @@ import {
   Activity,
 } from "lucide-react";
 
-const API = import.meta.env.VITE_API_URL || "/api";
+const API = import.meta.env.VITE_API_URL || "";
 const VERDICT_COLORS = {
   CLEAR: "#22c55e",
   REDACTED: "#f59e0b",
