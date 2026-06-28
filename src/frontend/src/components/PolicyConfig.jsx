@@ -23,7 +23,7 @@ import {
   FlaskConical,
 } from "lucide-react";
 
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const API = import.meta.env.VITE_API_URL || "";
 
 const tokens = {
   bg: "#09090b",
